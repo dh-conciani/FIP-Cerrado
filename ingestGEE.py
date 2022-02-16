@@ -8,7 +8,7 @@ import pandas as pd
 from google.cloud import storage
 
 ## api credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/api_key_ipam.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "root:/key.json"
 ee.Initialize()
 
 ## start client
