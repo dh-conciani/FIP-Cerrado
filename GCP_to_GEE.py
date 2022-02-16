@@ -1,0 +1,66 @@
+## batch upload from GCP to GEE
+## dhemerson.costa@ipam.org.br
+
+## import libraries
+import ee
+import os
+import pandas as pd
+from google.cloud import storage
+
+## api credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "dest-file-to-json"
+ee.Initialize()
+
+## start client
+client = storage.Client()
+
+## define bucket
+bucket_name = 'fip-data'
+asset_name = 'users/dh-conciani/basemaps/fip-inpe-2004'
+
+## create empty recipies
+gcp_file = []
+basename = []
+gee_file = []
+
+## parse all files into recipe and store in the recipe object 
+for blob in client.list_blobs(bucket_name):
+    gcp_file = gcp_file + [('gs://' + bucket_name + '/' + str(blob).split(sep=', ')[1])]  
+    
+print (gcp_file)
+    
+## parse all complete recipe filenames and extract only the basename
+for blob_i in gcp_file:
+    basename = basename + [asset_name + '/' + blob_i.split(sep='/')[3]]
+    
+## remove .tif extenstion from basename
+for gee_file_i in basename:
+    gee_file = gee_file + [gee_file_i.split(sep='.')[0]]    
+    
+    
+## start client
+client = storage.Client()
+
+## define bucket
+bucket_name = 'fip-data'
+asset_name = 'users/dh-conciani/basemaps/fip-inpe-2004'
+
+## create empty recipies
+gcp_file = []
+basename = []
+gee_file = []
+
+## parse all files into recipe and store in the recipe object 
+for blob in client.list_blobs(bucket_name):
+    gcp_file = gcp_file + [('gs://' + bucket_name + '/' + str(blob).split(sep=', ')[1])]  
+    
+print (gcp_file)
+    
+## parse all complete recipe filenames and extract only the basename
+for blob_i in gcp_file:
+    basename = basename + [asset_name + '/' + blob_i.split(sep='/')[3]]
+    
+## remove .tif extenstion from basename
+for gee_file_i in basename:
+    gee_file = gee_file + [gee_file_i.split(sep='.')[0]]    
+
